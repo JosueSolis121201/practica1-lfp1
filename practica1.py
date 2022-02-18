@@ -1,5 +1,5 @@
 from Analizardata import Analizardata
-data=Analizardata
+data=Analizardata()
 
 class Aplicacion:
     def __init__(self):
@@ -15,7 +15,7 @@ class Aplicacion:
     5. Salir
     Escoja una opcion:''')
             if x =="1":
-                data.leer(self)
+                data.analizador()
             elif x =="2":
                 pass
             elif x =="3":
