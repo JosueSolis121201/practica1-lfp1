@@ -39,7 +39,7 @@ class Analizardata:                                   #Analizador para los .data
 
         while self.texto != "":
             letra = self.leer_letra()
-            if letra.isalpha():
+            if letra.isalpha() :
                 lectura = self.letras_s0()
                 self.lista_tokens.append(lectura)
             elif letra == "\"" or letra == "“" or letra == "”":
@@ -47,16 +47,43 @@ class Analizardata:                                   #Analizador para los .data
                 self.lista_tokens.append(lectura)
             elif letra == ":":
                 self.quitar_primera_letra()
-                self.lista_tokens.append(":")
+                self.lista_tokens.append(":")   
+            elif letra == "(":
+                self.quitar_primera_letra()
+                self.lista_tokens.append("(")
+            elif letra == "[":
+                self.quitar_primera_letra()
+                self.lista_tokens.append("[")
+            elif letra == ")":
+                self.quitar_primera_letra()
+                self.lista_tokens.append(")")
+            elif letra == "]":
+                self.quitar_primera_letra()
+                self.lista_tokens.append("]")
+            elif letra == ",":
+                self.quitar_primera_letra()
+                self.lista_tokens.append(",")      
+
+            elif letra.isnumeric() == True :   
+                lectura = self.numero_s0()
+                self.lista_tokens.append(lectura)     ##############
+
+            elif letra == "\n" or letra == "\t" or letra == " ":   
+                self.quitar_primera_letra()
+           
+            
             else:
                 self.quitar_primera_letra()
                 print({"error":letra})
+
 
         print(self.lista_tokens)
 
     def quitar_primera_letra(self):
         if(self.texto != ""):
             self.texto=self.texto[1:]
+
+    
     
     def leer_letra(self):
         if(self.texto != ""):
@@ -96,6 +123,31 @@ class Analizardata:                                   #Analizador para los .data
         else:
             self.quitar_primera_letra()
             return letra 
+
+    def numero_s0(self):
+        letra = self.leer_letra()
+        self.quitar_primera_letra()
+        return letra +  self.numero_s1()     
+                   
+            
+
+    def numero_s1(self):
+        letra = self.leer_letra()
+        if True ==  letra.isnumeric():
+            self.quitar_primera_letra()
+            return letra + self.numero_s1()
+        else:
+            self.quitar_primera_letra()
+            return letra 
+    
+    
+
+            
+
+            
+
+
+
             
 
 
