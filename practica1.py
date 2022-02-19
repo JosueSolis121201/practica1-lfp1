@@ -1,5 +1,7 @@
 from Analizardata import Analizardata
+from Analizarlfp import Analizarlfp
 data=Analizardata()
+lfp=Analizarlfp()
 
 class Aplicacion:
     def __init__(self):
@@ -17,7 +19,7 @@ class Aplicacion:
             if x =="1":
                 data.analizador()
             elif x =="2":
-                pass
+                lfp.analizador()
             elif x =="3":
                 pass
             elif x =="4":

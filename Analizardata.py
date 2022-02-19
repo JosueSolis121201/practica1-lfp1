@@ -60,9 +60,13 @@ class Analizardata:                                   #Analizador para los .data
             elif letra == "]":
                 self.quitar_primera_letra()
                 self.lista_tokens.append("]")
+            elif letra == ";":
+                self.quitar_primera_letra()
+                self.lista_tokens.append(";") 
             elif letra == ",":
                 self.quitar_primera_letra()
-                self.lista_tokens.append(",")      
+                self.lista_tokens.append(",")
+                  
 
             elif letra.isnumeric() == True :   
                 lectura = self.numero_s0()
