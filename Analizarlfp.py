@@ -4,6 +4,14 @@ from operator import le
 from tkinter import Tk                               #Libreria para explorador de archivos (Se usara para leer data e instrucciones)
 from tkinter.filedialog import askopenfilename
 from xmlrpc.client import boolean       #complemento para el explorador ^^^
+from Analizardata import instruccionesdata
+import numpy as np
+import matplotlib.pyplot as plt
+from fpdf import FPDF 
+
+
+
+
 
 
 class instruccioneslfp:
@@ -18,6 +26,8 @@ class instruccioneslfp:
         self.titulo_activado = False
         self.titulox_activado = False
         self.tituloy_activado = False
+    
+
 
     def imprimir(self):
         return {
@@ -28,30 +38,61 @@ class instruccioneslfp:
             "tituloy":self.tituloy,
         }
 
-        
+    def imprimir(self):
+        return {
+            "PRODUCTOS":self.producto,
+            "nombre":self.nombre_mes,
+            "año":self.año,
+            "nombre del producto":self.nombre_producto,
+            "precio":self.precio,
+            "cantidad":self.cantidad,
+        }        
+
+    
 
 
-    def grafica_barra(self):
-        ## Declaramos valores para el eje x
-        eje_x = ['Python', 'R', 'Node.js', 'PHP']
-        
-        ## Declaramos valores para el eje y
-        eje_y = [50,20,35,47]
-        
-        ## Creamos Gráfica
-        plt.bar(eje_x, eje_y)
-        
-        ## Legenda en el eje y
-        plt.ylabel('Cantidad de usuarios')
-        
-        ## Legenda en el eje x
-        plt.xlabel('Lenguajes de programación')
-        
-        ## Título de Gráfica
-        plt.title('Usuarios de lenguajes de programación')
-        
-        ## Mostramos Gráfica
-        plt.show()
+    
+
+
+
+
+    def graficas(self,listaInstruccionesdata):
+        for x in listaInstruccionesdata:
+            eje_x = []
+            eje_y= []
+            for prod in x.producto:
+                eje_x.append(prod.nombre)
+                precio = 0
+                cantidad = 0
+                if len(prod.numericos) > 1:
+                    precio = float(prod.numericos[0])
+                    cantidad = float(prod.numericos[1])
+                elif len(prod.numericos) > 0:
+                    precio = float(prod.numericos[0])
+                total = int(precio * cantidad)
+                eje_y.append(total)    
+
+            
+            ## Creamos Gráfica
+            if   self.grafica == "\"barras\"":
+                plt.bar(eje_x, eje_y)
+            elif self.grafica == "\"lineas\"":   
+                plt.plot(eje_x, eje_y)
+            else:
+                plt.pie(eje_y, labels = eje_x,autopct="%0.1f %%")
+            ## Legenda en el eje y
+            plt.ylabel(self.tituloy)
+            ## Legenda en el eje x
+            plt.xlabel(self.titulox)
+            ## Título de Gráfica
+            if self.titulo == "":
+                self.titulo = "Reporte de Ventas "+ x.nombre_mes+" - "+ x.año+"."
+
+            plt.title(self.titulo)
+            ## Mostramos Gráfica
+            plt.show()
+
+           
     
     
         
@@ -166,9 +207,7 @@ class Analizarlfp:                                   #Analizador para los .data
                 print({"error":letra})
 
 
-        for inst in self.lista_instrucciones:
-            inst.grafica_barra()
-            #print(inst.imprimir())
+      
 
 
         print(self.lista_tokens)
