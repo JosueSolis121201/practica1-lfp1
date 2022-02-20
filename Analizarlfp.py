@@ -57,6 +57,10 @@ class instruccioneslfp:
 
 
     def graficas(self,listaInstruccionesdata):
+        if(self.nombre == "" or self.grafica == ""):
+            print("NO SE PUEDE GENERAR GRAFICA, FALTA NOMBRE O FALTA TIPO DE GRAFICA")
+            return
+
         for x in listaInstruccionesdata:
             eje_x = []
             eje_y= []
@@ -90,7 +94,13 @@ class instruccioneslfp:
 
             plt.title(self.titulo)
             ## Mostramos Gráfica
+            nombreGuardar = self.nombre.replace("\"","")
+
+            plt.savefig(nombreGuardar)
             plt.show()
+
+
+         
 
            
     
